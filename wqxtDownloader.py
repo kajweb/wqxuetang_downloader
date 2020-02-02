@@ -24,13 +24,15 @@ class wqxtDownloader():
 		folder = self.getFolder();
 		self.createFolder( folder );
 		self.folder = folder;
+		self.catatree = self.getCatatree();
+		
 
 
 	# 获得配置文件的jwt_key
 	def getJwtKey( self ):
-	    conf = getConf();
-	    jwt_key = conf.get('wqxt', 'jwt_key');
-	    return jwt_key;
+		conf = getConf();
+		jwt_key = conf.get('wqxt', 'jwt_key');
+		return jwt_key;
 
 	# 获得下载页面的基础URL
 	def getBaseUrl( self, page ):
@@ -38,13 +40,13 @@ class wqxtDownloader():
 
 	# 初始化阅读书籍
 	def initread( self ):
-	    url = "https://lib-nuanxin.wqxuetang.com/v1/read/initread?bid={}".format( self.bid );
-	    curl = get_value("urllib");
-	    request = curl.request.urlopen(url);
-	    data = request.read().decode("UTF-8");
-	    bookInfo = json.loads( data );
-	    pages = bookInfo['data'];
-	    return pages;
+		url = "https://lib-nuanxin.wqxuetang.com/v1/read/initread?bid={}".format( self.bid );
+		curl = get_value("urllib");
+		request = curl.request.urlopen(url);
+		data = request.read().decode("UTF-8");
+		bookInfo = json.loads( data );
+		pages = bookInfo['data'];
+		return pages;
 		# data: {
 		# 	canread: 1
 		# 	upperlimit: 1
@@ -67,8 +69,15 @@ class wqxtDownloader():
 
 	# 获得目录
 	def getCatatree( self ):
-		# https://lib-nuanxin.wqxuetang.com/v1/book/catatree?bid=
-		pass;
+		url 	 = "https://lib-nuanxin.wqxuetang.com/v1/book/catatree?bid={}".format( self.bid );
+		curl 	 = get_value("urllib");
+		request  = curl.request.urlopen(url);
+		data 	 = request.read().decode("UTF-8");
+		cataTree = json.loads( data );
+		cataTreeData = cataTree['data'];
+		# self.parseCatatree( cataTreeData );
+		return cataTreeData;
+
 
 	# 获得书本信息
 	def getBookInfo( self ):
@@ -78,13 +87,13 @@ class wqxtDownloader():
 
 	# 获得解密序列
 	def getK( self ):
-	    url 	= "https://lib-nuanxin.wqxuetang.com/v1/read/k?bid={}".format( self.bid );
-	    curl 	= get_value("urllib");
-	    request = curl.request.urlopen(url);
-	    data 	= request.read().decode("UTF-8");
-	    kInfo 	= json.loads( data );
-	    kData 	= json.dumps(kInfo['data']);
-	    return kData;
+		url 	= "https://lib-nuanxin.wqxuetang.com/v1/read/k?bid={}".format( self.bid );
+		curl 	= get_value("urllib");
+		request = curl.request.urlopen(url);
+		data 	= request.read().decode("UTF-8");
+		kInfo 	= json.loads( data );
+		kData 	= json.dumps(kInfo['data']);
+		return kData;
 
 	def getPageUrl( self, page ):
 		baseUrl 	= self.getBaseUrl( page );
@@ -93,19 +102,19 @@ class wqxtDownloader():
 		return pageUrl;
 
 	def generateKparmas( self, page ):
-	    jwt_key  = self.jwt_key;
-	    curTime  = str(int(time.time()));
-	    time_sq3 = curTime + "000";
-	    jwt_data = {
-	        "p": page,
-	        "t": time_sq3,
-	        "b": self.bid,
-	        "w": 1000,
-	        "k": self.kData,
-	        "iat": curTime
-	    };
-	    jwt_enc = jwt.encode( jwt_data, jwt_key, algorithm='HS256');
-	    return jwt_enc.decode(encoding='utf-8');
+		jwt_key  = self.jwt_key;
+		curTime  = str(int(time.time()));
+		time_sq3 = curTime + "000";
+		jwt_data = {
+			"p": page,
+			"t": time_sq3,
+			"b": self.bid,
+			"w": 1000,
+			"k": self.kData,
+			"iat": curTime
+		};
+		jwt_enc = jwt.encode( jwt_data, jwt_key, algorithm='HS256');
+		return jwt_enc.decode(encoding='utf-8');
 
 	def start( self, *args ):
 		lNumber = len(args);
@@ -138,11 +147,12 @@ class wqxtDownloader():
 				logging.warning("跳过下载 第{}页({}/{})".format(  page, str(downloadTimes), str(countNum) ));
 			downloadTimes += 1;
 		# PDF
-		name 	= "_".join([ self.name, str(start), str(end) ]);
-		bid 	= self.bid
-		pdf 	= wqxtPDF(  bid, name );
+		name 	 = "_".join([ self.name, str(start), str(end) ]);
+		bid 	 = self.bid;
+		catatree = self.catatree;
+		pdf 	 = wqxtPDF(  bid, name, catatree );
 		pdf.addPages( pageLists );
-		pdf.generatePDF();		
+		pdf.generatePDF();
 
 	def getFolder( self ):
 		downloadFolder = self.downloadFolder;
@@ -158,19 +168,19 @@ class wqxtDownloader():
 			logging.warning("失败创建文件夹 {}".format(folder));
 
 	def downloadImage( self, url, path ):
-	    curl = get_value("urllib");
-	    isExists = os.path.exists(path)
-	    if not isExists:
-	        headers = {"referer": "test-python-downloader"};
-	        requestPer = curl.request.Request(url=url, headers=headers);
-	        request = curl.request.urlopen(requestPer);
-	        data = request.read()
-	        f = open(path,"wb")
-	        f.write(data)  
-	        f.close()
-	        return True;
-	    else:
-	    	return False;
+		curl = get_value("urllib");
+		isExists = os.path.exists(path)
+		if not isExists:
+			headers = {"referer": "test-python-downloader"};
+			requestPer = curl.request.Request(url=url, headers=headers);
+			request = curl.request.urlopen(requestPer);
+			data = request.read()
+			f = open(path,"wb")
+			f.write(data)  
+			f.close()
+			return True;
+		else:
+			return False;
 
 	def getImgPath( self, page ):
 		fileExt = self.fileExt;
