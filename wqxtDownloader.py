@@ -138,7 +138,7 @@ class wqxtDownloader():
 				logging.warning("跳过下载 第{}页({}/{})".format(  page, str(downloadTimes), str(countNum) ));
 			downloadTimes += 1;
 		# PDF
-		name 	= "_".join([ self.name, start, end ]);
+		name 	= "_".join([ self.name, str(start), str(end) ]);
 		bid 	= self.bid
 		pdf 	= wqxtPDF(  bid, name );
 		pdf.addPages( pageLists );
