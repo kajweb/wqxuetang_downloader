@@ -10,7 +10,7 @@ import jwt
 class wqxtDownloader():
 	fileExt = ".jpg";
 	downloadFolder = "books/IMG";
-	timeSleep = 1.2
+	timeSleep = 0.8;
 
 	# 构造函数
 	def __init__( self, bid ):

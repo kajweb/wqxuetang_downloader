@@ -23,8 +23,9 @@ def initUrllibNoCookies():
 def mkdir( folder ):
     isExists = os.path.exists(folder)
     if not isExists:
-        os.makedirs( folder, 0o777 )
-        logging.debug("创建文件夹 {}".format(folder));
+        os.makedirs( folder, 0o777 );
+        return True;
+    return False;
 
 def globalvar_init():
     global _global_dict
