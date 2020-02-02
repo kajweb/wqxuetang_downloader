@@ -43,7 +43,8 @@ python main.py book_id <end_page>
 
 ## 更新历史
 
-[点击这里链接到更新历史页面](docs/update_history.md)
+### v0.1
+- 每个页面增加1.2s间隔，防止阅读频率过快被拉黑。
 
 
 

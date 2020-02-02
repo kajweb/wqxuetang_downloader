@@ -10,6 +10,7 @@ import jwt
 class wqxtDownloader():
 	fileExt = ".jpg";
 	downloadFolder = "books/IMG";
+	timeSleep = 1.2
 
 	# 构造函数
 	def __init__( self, bid ):
@@ -132,11 +133,12 @@ class wqxtDownloader():
 			pageLists.append( path );
 			if downloadPage:
 				logging.info("下载成功 第{}页({}/{})".format( page, str(downloadTimes), str(countNum) ));
+				time.sleep(self.timeSleep)
 			else:
 				logging.warning("跳过下载 第{}页({}/{})".format(  page, str(downloadTimes), str(countNum) ));
 			downloadTimes += 1;
 		# PDF
-		name 	= self.name;
+		name 	= "_".join([ self.name, start, end ]);
 		bid 	= self.bid
 		pdf 	= wqxtPDF(  bid, name );
 		pdf.addPages( pageLists );
