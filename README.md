@@ -51,3 +51,4 @@ python main.py book_id <end_page>
 ## TODO
 
 - 下载频率过高，部分页面出现空白页面检测。
+- 检测下载失败的图片
