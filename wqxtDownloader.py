@@ -6,6 +6,7 @@ from wqxtPDF import *
 import json
 import logging
 import jwt
+import socket
 
 class wqxtDownloader():
 	fileExt = ".jpg";
@@ -138,14 +139,19 @@ class wqxtDownloader():
 		for page in range( start, end+1 ):
 			url = self.getPageUrl( page );
 			path = self.getImgPath( page );
-			downloadPage = self.downloadImage( url, path );
-			pageLists.append( path );
-			if downloadPage:
-				logging.info("下载成功 第{}页({}/{})".format( page, str(downloadTimes), str(countNum) ));
-				time.sleep(self.timeSleep)
-			else:
-				logging.warning("跳过下载 第{}页({}/{})".format(  page, str(downloadTimes), str(countNum) ));
-			downloadTimes += 1;
+			while(True):
+				try:
+					downloadPage = self.downloadImage( url, path );
+					pageLists.append( path );
+					if downloadPage:
+						logging.info("下载成功 第{}页({}/{})".format( page, str(downloadTimes), str(countNum) ));
+						time.sleep(self.timeSleep)
+					else:
+						logging.warning("跳过下载 第{}页({}/{})".format(  page, str(downloadTimes), str(countNum) ));
+					downloadTimes += 1;
+					break;
+				except socket.timeout:
+					logging.error("第{}页 下载超时！正在重试".format(page));
 		# PDF
 		name 	 = "_".join([ self.name, str(start), str(end) ]);
 		bid 	 = self.bid;
@@ -173,7 +179,7 @@ class wqxtDownloader():
 		if not isExists:
 			headers = {"referer": "test-python-downloader"};
 			requestPer = curl.request.Request(url=url, headers=headers);
-			request = curl.request.urlopen(requestPer);
+			request = curl.request.urlopen(requestPer, timeout=10);
 			data = request.read()
 			f = open(path,"wb")
 			f.write(data)  
