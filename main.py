@@ -3,7 +3,6 @@
 
 from utils import *
 from wqxtDownloader import *;
-import logging
 
 # 初始化全局变量
 globalvar_init();
@@ -14,7 +13,7 @@ initUrllibNoCookies();
 
 if __name__ == '__main__':
 	# usage: python3 main.py <book_id> <start> <end>
-	loggingLevel("info");
+	loggingLevel("INFO");
 	bid = sys.argv[1];
 	book = wqxtDownloader( bid );
 	book.start( *(int(x) for x in sys.argv[2:]) );

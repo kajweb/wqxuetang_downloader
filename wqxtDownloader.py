@@ -11,12 +11,15 @@ import socket
 class wqxtDownloader():
 	fileExt = ".jpg";
 	downloadFolder = "books/IMG";
-	# timeSleep = 5;	#失效，已经更新为随机时间范围sleepRange
 	sleepRange = {
-		"start": 5,
+		"start": 8,
 		"end": 20,
 		"precision": 1
 	};
+	errorConfig = {
+		"times": 5,
+		"sleep": 1
+	}
 
 	# 构造函数
 	def __init__( self, bid ):
@@ -165,8 +168,9 @@ class wqxtDownloader():
 				except InvalidPictureError:
 					Errortimes += 1;
 					logging.error("{} 获取到了失败的图片 第{}页({}/{}) 正在重试第{}次".format(str(bid), page, str(downloadTimes), str(countNum), str(Errortimes)));
-				time.sleep(1)
-				if Errortimes > 14:
+					self.kData = self.getK(); # 重新获取k
+					time.sleep( self.errorConfig.sleep )
+				if Errortimes > self.errorConfig.times:
 					raise TooManyRetry;
 		# PDF
 		name 	 = "_".join([ self.name, str(start), str(end) ]);
@@ -192,11 +196,16 @@ class wqxtDownloader():
 		curl = get_value("urllib");
 		isExists = os.path.exists(path)
 		if not isExists:
-			headers = {"referer": "I'm the downloader, Talk it over, Please don't ban."};
+			bid = self.bid;
+			headers = {
+				"referer": "https://lib-nuanxin.wqxuetang.com/read/pdf/{}".format(bid),
+				"tips":		"Brother...... Working late at night...???"
+			};
 			requestPer = curl.request.Request(url=url, headers=headers);
 			request = curl.request.urlopen(requestPer, timeout=10);
 			data = request.read()
-			if data == self.invalidpic:
+			compareNBytes = 10000;
+			if data[0:compareNBytes] == self.invalidpic[0:compareNBytes]:
 				raise InvalidPictureError
 			f = open(path,"wb")
 			f.write(data)  
@@ -222,4 +231,4 @@ class InvalidPictureError(Exception):
 
 class TooManyRetry(Exception):
 	def __init__(self):
-		logging.error("重试次数过多，程序终止，请尝试重新执行main.py");
+		logging.critical("重试次数过多，程序终止，请尝试重新执行main.py");
