@@ -14,6 +14,12 @@ initUrllibNoCookies();
 if __name__ == '__main__':
 	# usage: python3 main.py <book_id> <start> <end>
 	loggingLevel("INFO");
-	bid = sys.argv[1];
-	book = wqxtDownloader( bid );
-	book.start( *(int(x) for x in sys.argv[2:]) );
+	LSArg = len(sys.argv);
+	if LSArg==1:
+		bid = input("请输入需要下载的bid：");
+		book = wqxtDownloader( bid );
+		book.start();
+	else:
+		bid = sys.argv[1];
+		book = wqxtDownloader( bid );
+		book.start( *(int(x) for x in sys.argv[2:]) );
