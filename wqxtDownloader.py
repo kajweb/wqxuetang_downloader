@@ -31,7 +31,7 @@ class wqxtDownloader():
 		self.createFolder( folder );
 		self.folder = folder;
 		self.catatree = self.getCatatree();
-		
+		self.invalidpic = self.getInvalidPicInfo()
 
 
 	# 获得配置文件的jwt_key
@@ -145,6 +145,7 @@ class wqxtDownloader():
 		for page in range( start, end+1 ):
 			url = self.getPageUrl( page );
 			path = self.getImgPath( page );
+			Errortimes = 0
 			while(True):
 				try:
 					downloadPage = self.downloadImage( url, path );
@@ -159,7 +160,14 @@ class wqxtDownloader():
 					downloadTimes += 1;
 					break;
 				except socket.timeout:
-					logging.error("{}下载超时 第{}页({}/{}) 正在重试".format( str(bid), page, str(downloadTimes), str(countNum) ));
+					Errortimes += 1;
+					logging.error("{}下载超时 第{}页({}/{}) 正在重试第{}次".format( str(bid), page, str(downloadTimes), str(countNum), str(Errortimes) ));
+				except InvalidPictureError:
+					Errortimes += 1;
+					logging.error("{} 获取到了失败的图片 第{}页({}/{}) 正在重试第{}次".format(str(bid), page, str(downloadTimes), str(countNum), str(Errortimes)));
+				time.sleep(1)
+				if Errortimes > 14:
+					raise TooManyRetry;
 		# PDF
 		name 	 = "_".join([ self.name, str(start), str(end) ]);
 		catatree = self.catatree;
@@ -188,6 +196,8 @@ class wqxtDownloader():
 			requestPer = curl.request.Request(url=url, headers=headers);
 			request = curl.request.urlopen(requestPer, timeout=10);
 			data = request.read()
+			if data == self.invalidpic:
+				raise InvalidPictureError
 			f = open(path,"wb")
 			f.write(data)  
 			f.close()
@@ -200,3 +210,16 @@ class wqxtDownloader():
 		folder 	= self.folder;
 		path = "{folder}/{page}{fileExt}".format( folder=folder, page=str(page), fileExt=fileExt );
 		return path;
+
+	def getInvalidPicInfo(self):
+			f = open('invalid_pic.jpg','rb');
+			invalidpic = f.read()
+			f.close()
+			return invalidpic;
+
+class InvalidPictureError(Exception):
+	pass;
+
+class TooManyRetry(Exception):
+	def __init__(self):
+		logging.error("重试次数过多，程序终止，请尝试重新执行main.py");
