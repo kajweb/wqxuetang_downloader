@@ -78,7 +78,11 @@ python main.py <book_id> <end_page>
 
 - AttributeError: module 'jwt' has no attribute 'encode'
 
-  > jwt库命名冲突，卸载jwt，重新安装[pyjwt](https://pyjwt.readthedocs.io/en/latest/)
+  > jwt库命名冲突，卸载jwt，重新安装[pyjwt](https://pyjwt.readthedocs.io/en/latest/).
+  
+- configparser.NoSectionError: No section: 'wqxt'
+
+  > 路径问题，切程序目录下运行
 
 ## ⚡ 声明
 
