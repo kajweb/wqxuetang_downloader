@@ -11,6 +11,11 @@ import socket
 class wqxtDownloader():
 	fileExt = ".jpg";
 	downloadFolder = "books/IMG";
+	# sleepRange = {
+	# 	"start": 2,
+	# 	"end": 5,
+	# 	"precision": 1
+	# };
 	sleepRange = {
 		"start": 8,
 		"end": 20,
@@ -169,8 +174,8 @@ class wqxtDownloader():
 					Errortimes += 1;
 					logging.error("{} 获取到了失败的图片 第{}页({}/{}) 正在重试第{}次".format(str(bid), page, str(downloadTimes), str(countNum), str(Errortimes)));
 					self.kData = self.getK(); # 重新获取k
-					time.sleep( self.errorConfig.sleep )
-				if Errortimes > self.errorConfig.times:
+					time.sleep( self.errorConfig['sleep'] )
+				if Errortimes > self.errorConfig['times']:
 					raise TooManyRetry;
 		# PDF
 		name 	 = "_".join([ self.name, str(start), str(end) ]);
