@@ -159,7 +159,7 @@ class wqxtDownloader():
 					downloadTimes += 1;
 					break;
 				except socket.timeout:
-					logging.error("第{}页 下载超时！正在重试".format(page));
+					logging.error("{}下载超时 第{}页({}/{}) 正在重试".format( str(bid), page, str(downloadTimes), str(countNum) ));
 		# PDF
 		name 	 = "_".join([ self.name, str(start), str(end) ]);
 		catatree = self.catatree;
