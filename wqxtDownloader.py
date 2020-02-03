@@ -12,6 +12,11 @@ class wqxtDownloader():
 	fileExt = ".jpg";
 	downloadFolder = "books/IMG";
 	timeSleep = 5;
+	sleepRange = {
+		"start": 5,
+		"end": 10,
+		"precision": 1
+	};
 
 	# 构造函数
 	def __init__( self, bid ):
@@ -135,7 +140,8 @@ class wqxtDownloader():
 		# 本次操作的页码列表
 		pageLists = [];
 		bookName = self.name;
-		logging.info("开始下载{}，共 {} 页".format( bookName, str(countNum) ));
+		bid 	 = self.bid;
+		logging.info("{}开始下载{}，共 {} 页".format( str(bid), bookName, str(countNum) ));
 		for page in range( start, end+1 ):
 			url = self.getPageUrl( page );
 			path = self.getImgPath( page );
@@ -144,17 +150,18 @@ class wqxtDownloader():
 					downloadPage = self.downloadImage( url, path );
 					pageLists.append( path );
 					if downloadPage:
-						logging.info("下载成功 第{}页({}/{})".format( page, str(downloadTimes), str(countNum) ));
-						time.sleep(self.timeSleep)
+						sleepRange = self.sleepRange;
+						ts = getRandom( sleepRange['start'], sleepRange['end'], sleepRange['precision'] );
+						logging.info("{}下载成功 第{}页({}/{}) 随机{}s".format( str(bid), page, str(downloadTimes), str(countNum), str(ts) ));
+						time.sleep( ts )
 					else:
-						logging.warning("跳过下载 第{}页({}/{})".format(  page, str(downloadTimes), str(countNum) ));
+						logging.warning("{}跳过下载 第{}页({}/{})".format( str(bid), page, str(downloadTimes), str(countNum) ));
 					downloadTimes += 1;
 					break;
 				except socket.timeout:
 					logging.error("第{}页 下载超时！正在重试".format(page));
 		# PDF
 		name 	 = "_".join([ self.name, str(start), str(end) ]);
-		bid 	 = self.bid;
 		catatree = self.catatree;
 		pdf 	 = wqxtPDF(  bid, name, catatree );
 		pdf.addPages( pageLists );
@@ -177,7 +184,7 @@ class wqxtDownloader():
 		curl = get_value("urllib");
 		isExists = os.path.exists(path)
 		if not isExists:
-			headers = {"referer": "test-python-downloader"};
+			headers = {"referer": "I'm the downloader, Talk it over, Please don't ban."};
 			requestPer = curl.request.Request(url=url, headers=headers);
 			request = curl.request.urlopen(requestPer, timeout=10);
 			data = request.read()

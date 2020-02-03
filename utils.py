@@ -6,6 +6,7 @@ import urllib.request
 import os
 import requests
 import logging
+import random
 
 def getConf():
     confFile = "conf.ini";
@@ -26,6 +27,14 @@ def mkdir( folder ):
         os.makedirs( folder, 0o777 );
         return True;
     return False;
+
+def getRandom( start, end, precision=0 ):
+    num = random.uniform( start, end );
+    if precision == 0:
+        return int(num);
+    return round( num , precision );
+
+
 
 def globalvar_init():
     global _global_dict
