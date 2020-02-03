@@ -11,7 +11,7 @@ import socket
 class wqxtDownloader():
 	fileExt = ".jpg";
 	downloadFolder = "books/IMG";
-	timeSleep = 2.5;
+	timeSleep = 5;
 
 	# 构造函数
 	def __init__( self, bid ):
