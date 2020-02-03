@@ -213,6 +213,8 @@ class wqxtDownloader():
 			compareNBytes = 10000;
 			if data[0:compareNBytes] == self.invalidpic[0:compareNBytes]:
 				raise InvalidPictureError
+			if len( data )<=5:
+				raise InvalidPictureError
 			f = open(path,"wb")
 			f.write(data)  
 			f.close()

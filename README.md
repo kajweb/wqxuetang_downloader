@@ -1,4 +1,4 @@
-**最后更新更新时间：2020-02-04 01:10**
+**最后更新更新时间：2020-02-04 03:04**
 
 
 
@@ -32,6 +32,7 @@
 | 2020-02-04 00:50 | 下载异常，变成5k图片（估计是哪位老哥加班？）                 |
 | 2020-02-04 01:08 | 修复下载异常，增加10k图片比对。没有增加5k图片比对（再次出现再说） |
 | 2020-02-04 01:28 | 增加直接在命令行执行函数，直接运行`python main.py`即可       |
+| 2020-02-04 03:04 | 增加识别5k图片                                               |
 
 
 
@@ -43,13 +44,24 @@
 
 ## ✨ 安装
 
-- 安装python3
+- 前期准备
 
-- 打开命令行，使用`pip install -r requirements`安装依赖
+	- 注册、登录 github
+	- 点击右上角的 `⭐Star`
+	
+- 下载与安装
 
-- 按照功能运行`python main.py <book_id>`即可完成下载
+  - 安装[GIT](https://gitforwindows.org/)
+  - 安装python3   [x86-64  ](https://www.python.org/ftp/python/3.6.6/python-3.6.6-amd64.exe) [x86](https://www.python.org/ftp/python/3.6.6/python-3.6.6.exe) 
+  - 使用`git clone https://github.com/kajweb/wqxuetang_downloader.git`克隆代码
 
-- 其中，book_id是阅读界面后面的5-8位数字
+- 下载依赖
+
+  - 打开命令行，使用`pip install -r requirements`安装依赖
+
+  - 运行`python main.py`
+
+  - > 其中，book_id是阅读界面后面的5-8位数字
 
   
 
