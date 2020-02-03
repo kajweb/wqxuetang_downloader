@@ -17,8 +17,8 @@ class wqxtDownloader():
 	# 	"precision": 1
 	# };
 	sleepRange = {
-		"start": 8,
-		"end": 20,
+		"start": 6,
+		"end": 15,
 		"precision": 1
 	};
 	errorConfig = {
