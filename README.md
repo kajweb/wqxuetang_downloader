@@ -1,8 +1,25 @@
-# 文泉学堂 下载器 v0.1
+**最后更新更新时间：2020-02-03 16：38**
+
+**为保证大多数用户体验与减轻网站负担，请自觉调大 time sleep，减少并发**
+
+
+
+
+
+# 文泉学堂 下载器
 
 文泉学堂解析工具，自动生成pdf，切勿商用和广泛传播。-\_-
 
 利用python3自动下载温泉学堂的pdf书籍（仅供测试，请24小时内删除）
+
+## 🌙 有效性
+
+| 时间             | 状态                                                       |
+| ---------------- | ---------------------------------------------------------- |
+| 2020-02-03 04:00 | 发布，下载丝滑流畅                                         |
+| 2020-02-03 12:00 | 用户反馈，下载状态正常                                     |
+| 2020-02-03 16:00 | 反馈下载超时，增加超时与自动重试，延长time sleep时间到2.5s |
+|                  | 通过正常页面阅读，发现加载速度慢                           |
 
 
 
@@ -46,11 +63,19 @@ python main.py <book_id> <end_page>
 
 
 
-## ⌛️ 开发规划
+## ⌛️ 常见问题
 
-无，随时关闭
+- 不会安装依赖库
 
+  > 直接使用pip install -r requirements安装即可
 
+- no model named: fitz
+
+  > 执行pip install pymupdf，安装[pymupdf](https://pymupdf.readthedocs.io/en/latest/)即可
+
+- AttributeError: module 'jwt' has no attribute 'encode'
+
+  > jwt库命名冲突，卸载jwt，重新安装[pyjwt](https://pyjwt.readthedocs.io/en/latest/)
 
 ## ⚡ 声明
 
@@ -68,10 +93,9 @@ python main.py <book_id> <end_page>
 
 
 
-## 更新历史
+## HISTORY
 
-### v0.1
-- 每个页面增加1.2s间隔，防止阅读频率过快被拉黑。
+- 2020-02-03 16:00 增加重试、下载间隔、超时检测。
 
 
 
