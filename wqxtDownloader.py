@@ -11,16 +11,16 @@ import socket
 class wqxtDownloader():
 	fileExt = ".jpg";
 	downloadFolder = "books/IMG";
-	sleepRange = {
-		"start": 2,
-		"end": 5,
-		"precision": 1
-	};
 	# sleepRange = {
-	# 	"start": 6,
-	# 	"end": 15,
+	# 	"start": 2,
+	# 	"end": 5,
 	# 	"precision": 1
 	# };
+	sleepRange = {
+		"start": 6,
+		"end": 15,
+		"precision": 1
+	};
 	errorConfig = {
 		"times": 5,
 		"sleep": 1
