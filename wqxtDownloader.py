@@ -11,19 +11,14 @@ import socket
 class wqxtDownloader():
 	fileExt = ".jpg";
 	downloadFolder = "books/IMG";
-	# sleepRange = {
-	# 	"start": 2,
-	# 	"end": 5,
-	# 	"precision": 1
-	# };
 	sleepRange = {
 		"start": 6,
-		"end": 15,
+		"end": 20,
 		"precision": 1
 	};
 	errorConfig = {
 		"times": 5,
-		"sleep": 1
+		"sleep": 2
 	}
 
 	# 构造函数
@@ -58,6 +53,7 @@ class wqxtDownloader():
 		curl = get_value("urllib");
 		request = curl.request.urlopen(url);
 		data = request.read().decode("UTF-8");
+		# {"data":[],"errcode":8003,"errmsg":"很抱歉，您访问的图书不存在"} #图书不存在
 		bookInfo = json.loads( data );
 		pages = bookInfo['data'];
 		return pages;
@@ -204,8 +200,7 @@ class wqxtDownloader():
 		if not isExists:
 			bid = self.bid;
 			headers = {
-				"referer": "https://lib-nuanxin.wqxuetang.com/read/pdf/{}".format(bid),
-				"tips":		"Brother...... Working late at night...???"
+				"referer": "https://lib-nuanxin.wqxuetang.com/read/pdf/{}".format(bid)
 			};
 			requestPer = curl.request.Request(url=url, headers=headers);
 			request = curl.request.urlopen(requestPer, timeout=10);
