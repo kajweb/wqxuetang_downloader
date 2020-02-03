@@ -11,16 +11,16 @@ import socket
 class wqxtDownloader():
 	fileExt = ".jpg";
 	downloadFolder = "books/IMG";
-	# sleepRange = {
-	# 	"start": 2,
-	# 	"end": 5,
-	# 	"precision": 1
-	# };
 	sleepRange = {
-		"start": 6,
-		"end": 15,
+		"start": 2,
+		"end": 5,
 		"precision": 1
 	};
+	# sleepRange = {
+	# 	"start": 6,
+	# 	"end": 15,
+	# 	"precision": 1
+	# };
 	errorConfig = {
 		"times": 5,
 		"sleep": 1
@@ -173,7 +173,8 @@ class wqxtDownloader():
 				except InvalidPictureError:
 					Errortimes += 1;
 					logging.error("{} 获取到了失败的图片 第{}页({}/{}) 正在重试第{}次".format(str(bid), page, str(downloadTimes), str(countNum), str(Errortimes)));
-					self.kData = self.getK(); # 重新获取k
+					self.kData = self.getK(); 		# 重新获取k
+					url = self.getPageUrl( page );	# 重新生成url
 					time.sleep( self.errorConfig['sleep'] )
 				if Errortimes > self.errorConfig['times']:
 					raise TooManyRetry;
