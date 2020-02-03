@@ -11,10 +11,10 @@ import socket
 class wqxtDownloader():
 	fileExt = ".jpg";
 	downloadFolder = "books/IMG";
-	timeSleep = 5;
+	# timeSleep = 5;	#失效，已经更新为随机时间范围sleepRange
 	sleepRange = {
 		"start": 5,
-		"end": 10,
+		"end": 20,
 		"precision": 1
 	};
 

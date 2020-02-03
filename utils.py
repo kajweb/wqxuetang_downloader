@@ -4,6 +4,7 @@
 import configparser
 import urllib.request
 import os
+import sys
 import requests
 import logging
 import random
@@ -33,6 +34,19 @@ def getRandom( start, end, precision=0 ):
     if precision == 0:
         return int(num);
     return round( num , precision );
+
+def loggingLevel( level=logging.info ):
+    if level == "CRITICAL":
+        _level = logging.CRITICAL;
+    elif level == "ERROR":
+        _level = logging.ERROR;
+    elif level == "WARNING":
+        _level = logging.WARNING;
+    elif level == "INFO":
+        _level = logging.INFO;
+    else:
+        _level = logging.DEBUG;
+    logging.basicConfig(stream=sys.stderr, format='%(asctime)s [%(levelname)s] %(message)s', level=_level);
 
 
 
