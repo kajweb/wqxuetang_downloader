@@ -8,7 +8,7 @@
 
 有一名正直的同学[@miaoshengyou](https://github.com/miaoshengyou)叫你们别再[吃人血馒头](https://github.com/kajweb/wqxuetang_downloader/issues/21)了。
 
-![](D:\Code\crawler_project\wqxuetang_downloader\zhengzhi.png)
+![](zhengzhi.png)
 
 我一直在想，是什么钱支撑起文泉学堂运营的钱？如果是清华大学，回到本质是不是纳税人、country的钱？如果我们用这些钱提升国民教育有什么错？
 
