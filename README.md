@@ -2,10 +2,6 @@
 
 
 
-![](notice.jpeg)
-
-
-
 
 # 文泉学堂 离线阅读转换器
 
@@ -54,13 +50,19 @@
 人类的整体水平才不断发展。
 ```
 
+
+
+![](notice.jpeg)
+
+
+
 ## ❤免责声明
 
 > 所发布的一切破解补丁、注册机和注册信息及软件的解密分析文章仅限用于学习和研究目的；不得将上述内容用于商业或者非法用途，否则，一切后果请用户自负。本站信息来自网络，版权争议与本站无关。您必须在下载后的24个小时之内，从您的电脑中彻底删除上述内容。如果您喜欢该程序，请支持正版软件，购买注册，得到更好的正版服务。如有侵权请邮件与我们联系处理。
 
 
 
-## 安装与使用
+## ⌛️ 安装与使用
 
 [FAQ](https://github.com/kajweb/wqxuetang_downloader/wiki)
 
@@ -73,7 +75,8 @@
 * [一本书下载](https://github.com/kajweb/wqxuetang_downloader/wiki/一本书下载)
 * [多本书下载](https://github.com/kajweb/wqxuetang_downloader/wiki/多本书下载)
 
-
+### FAQ
+* [常见问题](https://github.com/kajweb/wqxuetang_downloader/wiki/常见问题)
 
 ## 🌙 更新与补丁
 
@@ -97,3 +100,4 @@
 
 ## 其他渠道
 [其他渠道](https://github.com/kajweb/wqxuetang_downloader/wiki/其他渠道)
+
