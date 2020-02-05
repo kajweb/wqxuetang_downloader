@@ -1,4 +1,4 @@
-**最后更新更新时间：2020-02-04 20:55**
+**最后更新更新时间：2020-02-05 22:43**
 
 
 
@@ -17,26 +17,6 @@
 > - 该速度平均速度为13秒/页，一分钟4.6页，一小时4.6页 277页。阅读完一本书约需要1-2个小时。所以我认为[@miaoshengyou](https://github.com/miaoshengyou)的观点不成立。
 >
 > 最后提醒一句：**网络不是法外之地,网络言行需谨慎。**
-
-
-
-
-
-有一名正直的同学[@miaoshengyou](https://github.com/miaoshengyou)叫你们别再[吃人血馒头](https://github.com/kajweb/wqxuetang_downloader/issues/21)了。
-
-![](zhengzhi.png)
-
-我一直在想，是什么钱支撑起文泉学堂运营的钱？如果是清华大学，回到本质是不是纳税人、country的钱？如果我们用这些钱提升国民教育有什么错？
-
-我在这里提一个最简单的问题：作为清华大学的学生使用这个平台是否需要付费？
-
-- 如果需要付费，他们在哪一部分付费了？
-  - 图书馆代缴？
-    - 图书馆的钱哪里来？
-    - 学校的钱哪里来？
-  - 学生个人缴费？
-    - 学生学费是怎么构成的？
-- 如果不需要付费，他们算不算阅读了盗版书？
 
 
 
@@ -103,6 +83,9 @@
 | 2020-02-04 20:35 | 制定并发布patch1，修复登录问题                               |
 |                  | 制定并发布patch2，修复503问题                                |
 | 2020-02-05 20:00 | 新增两个[悦读](http://yd.51zhy.cn)下载程序                   |
+| 2020-02-05 22:21 | 制定并发布patch3，设置错误登录状态(`PHPSESSIONS`)的提示。    |
+|                  | 增加`main_mult.py`提供多个文件下载，格式为：                 |
+|                  | `python main_mult.py [<bid1>] [<bid2>] [<bid3>] [...]`       |
 
 
 
@@ -155,6 +138,8 @@
 [sinceNa/wqxuetang ](https://github.com/sinceNa/wqxuetang)(NodeJS)
 
 [kdxcxs/wqDownloader](https://github.com/kdxcxs/wqDownloader)(PY代理)
+
+[e0r/wqxuetang_anjian](https://github.com/e0r/wqxuetang_anjian)(按键精灵)
 
 
 
