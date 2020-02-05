@@ -6,9 +6,10 @@ from wqxtDownloader import *;
 
 # 初始化全局变量
 globalvar_init();
+# 设置cookies
+setCookiesFile(os.getcwd()+"\\cookies.txt");
 # 初始化urllib
-initUrllibNoCookies();
-# 初始化logging
+initUrllib();
 
 
 if __name__ == '__main__':

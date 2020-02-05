@@ -8,17 +8,20 @@ import logging
 import jwt
 import socket
 
+from urllib import error
+
 class wqxtDownloader():
 	fileExt = ".jpg";
 	downloadFolder = "books/IMG";
 	sleepRange = {
-		"start": 6,
-		"end": 20,
+		"start": 20,
+		"end": 40,
 		"precision": 1
 	};
 	errorConfig = {
-		"times": 5,
-		"sleep": 2
+		"times": 5,        # 最大错误次数
+		"sleep": 2,        # 无效图片错误
+		"httpSleep": 20    # http错误次数
 	}
 
 	# 构造函数
@@ -172,6 +175,13 @@ class wqxtDownloader():
 					self.kData = self.getK(); 		# 重新获取k
 					url = self.getPageUrl( page );	# 重新生成url
 					time.sleep( self.errorConfig['sleep'] )
+				except error.HTTPError:
+					Errortimes += 1;
+					httpSleepTime =  self.errorConfig['httpSleep'];
+					logging.error("{} 发生了严重错误，暂停s秒 第{}页({}/{}) 正在重试第{}次".format( str(bid), str(sleepTime), page, str(downloadTimes), str(countNum), str(Errortimes)));
+					self.kData = self.getK(); 		# 重新获取k
+					url = self.getPageUrl( page );	# 重新生成url
+					time.sleep( httpSleepTime )
 				if Errortimes > self.errorConfig['times']:
 					raise TooManyRetry;
 		# PDF

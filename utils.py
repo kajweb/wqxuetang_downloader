@@ -8,6 +8,23 @@ import sys
 import requests
 import logging
 import random
+import http.cookiejar
+
+def initUrllib():
+    cookies_file = get_value("cookiesFile");
+    print( cookies_file );
+    cookie = http.cookiejar.LWPCookieJar()
+    cookie.load( cookies_file, ignore_discard=True, ignore_expires=True)
+    handler = urllib.request.HTTPCookieProcessor(cookie)
+    opener = urllib.request.build_opener(handler)
+    UA = getUA();
+    headers=("User-Agent", UA);
+    opener.addheaders=[headers];
+    urllib.request.install_opener(opener)
+    set_value("urllib",urllib);
+
+def setCookiesFile( cookies_file ):
+    set_value( "cookiesFile", cookies_file );
 
 def getUA():
     UA = [
