@@ -98,9 +98,11 @@
 | 2020-02-04 02:39 | 被封IP、关了数据接口、单个ip访问上限等问题，被限制访问，访问全部定向到5k图片 |
 | 2020-02-04 03:04 | 增加识别5k图片                                               |
 | 2020-02-04 03:47 | 增加随机User-Agent，虽然没什么用                             |
-| 2020-02-04 17:45 | 网站受资源限制，需要登录使用。脚本停止更新。                 |
+| 2020-02-04 17:45 | 网站受资源限制，需要登录使用。脚本停止更新。最后有效更新`commit ad0c71480c4eeaf338d09492237ed70e3d28d0be` |
 | 2020-02-04 20:00 | 网站重新开放                                                 |
-| 2020-02-04 20:35 | 制定并发布patch                                              |
+| 2020-02-04 20:35 | 制定并发布patch1，修复登录问题                               |
+|                  | 制定并发布patch2，修复503问题                                |
+| 2020-02-05 20:00 | 新增两个[悦读](http://yd.51zhy.cn)下载程序                   |
 
 
 
@@ -148,7 +150,7 @@
 
 [文泉学堂pdf一键下载](https://greasyfork.org/zh-CN/scripts/396025-文泉学堂pdf下载) (油猴脚本)   [github](https://github.com/Kevin0z0/wenquan-pdf-download)
 
-[SweetInkSweetInk)/wqxuetang-pdf-downloader](https://github.com/SweetInk/wqxuetang-pdf-downloader) (Java)
+[SweetInk/wqxuetang-pdf-downloader](https://github.com/SweetInk/wqxuetang-pdf-downloader) (Java)
 
 [sinceNa/wqxuetang ](https://github.com/sinceNa/wqxuetang)(NodeJS)
 
