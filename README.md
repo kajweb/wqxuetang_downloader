@@ -62,6 +62,8 @@
 
 ## 安装与使用
 
+[FAQ](https://github.com/kajweb/wqxuetang_downloader/wiki)
+
 ### 安装方法
 
 * [安装方法](https://github.com/kajweb/wqxuetang_downloader/wiki/安装方法)
