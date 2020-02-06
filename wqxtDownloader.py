@@ -59,9 +59,9 @@ class wqxtDownloader():
 		# {"data":[],"errcode":8003,"errmsg":"很抱歉，您访问的图书不存在"} #图书不存在	
 		bookInfo = json.loads( data );
 		if bookInfo["errcode"] == 3001:
-			raise NoLoginError
+			raise NoLoginError(bookInfo["errmsg"])
 		elif bookInfo["errcode"] == 8003:
-			raise BIDError
+			raise BIDError(bookInfo["errmsg"])
 		pages = bookInfo['data'];
 		return pages;
 		# data: {
@@ -244,12 +244,20 @@ class wqxtDownloader():
 			return invalidpic;
 
 class BIDError(Exception):
-	def __init__(self):
+	def __init__(self, errmsg):
 		logging.critical("获取图书内容失败，图书编号错误！");
+		self.errmsg = errmsg
+
+	def __str__(self):
+		return self.errmsg
 
 class NoLoginError(Exception):
-	def __init__(self):
+	def __init__(self, errmsg):
 		logging.critical("获取图书内容失败，未登录或cookies配置有误！");
+		self.errmsg = errmsg
+	
+	def __str__(self):
+		return self.errmsg
 
 class InvalidPictureError(Exception):
 	pass;
