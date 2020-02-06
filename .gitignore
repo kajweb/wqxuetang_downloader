@@ -1,3 +1,6 @@
 __pycache__/
 .vscode/
 books/
+
+# 不跟踪cookies.txt文件，避免提交代码后将自己的cookies提交到github
+cookies.txt
