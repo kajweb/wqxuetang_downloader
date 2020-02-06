@@ -1,0 +1,4 @@
+requests==2.20.0
+pymupdf==1.16.10
+img2pdf==0.3.3
+PyJWT==1.7.1
