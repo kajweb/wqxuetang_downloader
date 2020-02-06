@@ -29,7 +29,9 @@ if __name__ == '__main__':
 	try:
 		opts, args = getopt.getopt(sys.argv[1:],"hb:p:",["help","books=","pages="])
 	except getopt.GetoptError:
-		print("main.py -b <BooksID_1>,<BooksID_2> ... [-p <start_page>,<end_page>][-p <end_page>], 或使用-h, --help来获取帮助")
+		print("\n命令行解析错误")
+		print("main.py -b <BooksID_1>,<BooksID_2> ... [-p <start_page>,<end_page>][-p <end_page>]\n")
+		print("你可以通过运行 python main.py -h 来获取命令行参数帮助")
 	if len(opts) == 0:
 		bid_str = input("输入你要下载的图书BID，多的图书使用英文逗号(\",\")分隔开:\n")
 		bid_str = bid_str.strip()
@@ -44,6 +46,10 @@ if __name__ == '__main__':
 	elif opts[0][0] in ['-b', '--books']:
 		books_str = opts[0][1].strip()
 		books = books_str.split(",")
+	else :
+		print("main.py -b <BooksID_1>,<BooksID_2> ... [-p <start_page>,<end_page>][-p <end_page>]\n")
+		print("你可以通过运行 python main.py -h 来获取命令行参数帮助")
+		sys.exit()
 	if len(books) == 1:
 		bid = books[0];
 		book = wqxtDownloader( bid );
