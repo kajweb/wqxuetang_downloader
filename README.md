@@ -1,4 +1,4 @@
-**最后更新更新时间：2020-02-06 12:18**
+**最后更新更新时间：2020-02-06 13:05**  [Wiki](https://github.com/kajweb/wqxuetang_downloader/wiki)
 
 
 # 文泉学堂 离线阅读转换器（ReOpen）
@@ -9,8 +9,6 @@
 这个脚本的本质上就是将线上阅读转化为线下阅读。
 
 切勿商用和广泛传播。
-
-
 
 ![](https://i.loli.net/2020/02/06/YIfxXDLPcMywZb8.png)
 
@@ -32,8 +30,6 @@
 [爬取声明](https://github.com/kajweb/wqxuetang_downloader/爬取声明)
 
 ## ⌛️ 安装与使用
-
-[FAQ](https://github.com/kajweb/wqxuetang_downloader/wiki)
 
 ### 安装方法
 
