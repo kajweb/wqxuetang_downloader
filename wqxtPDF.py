@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*- 
 
 from utils import *
+import copy
 import os
 import img2pdf
 import time
@@ -17,9 +18,12 @@ class wqxtPDF():
 	tempPath = None;
 
 
-	def __init__( self, bid, name, bookmarks=[], lists=lists ):
+	def __init__( self, bid, name,lNumber, start ,end, bookmarks=[], lists=lists):
 		self.bid = bid;
 		self.name = name;
+		self.lNumber = lNumber
+		self.start = start
+		self.end = end
 		self.lists = lists;
 		self.bookmarks = bookmarks;
 		mkdir(self.PDFFolder);
@@ -69,7 +73,8 @@ class wqxtPDF():
 		doc = fitz.open( tempPath );
 		toc = doc.getToC();
 		self.tocAppend( toc, self.bookmarks );
-		doc.setToC(toc);
+		new_toc = self.toc_checker(toc)
+		doc.setToC(new_toc);
 		doc.save( filePath );
 		doc.close();
 		os.remove( tempPath )
@@ -82,3 +87,25 @@ class wqxtPDF():
 			toc.append([ level, label, pnum ]);
 			if "children" in chapter.keys():
 				self.tocAppend( toc, chapter['children'] );
+
+	def toc_checker(self, toc_origin):
+		if self.lNumber == 0:
+			return toc_origin
+		elif self.lNumber == 1:
+			new_toc = []
+			for title in toc_origin:
+				if title[2] > self.end: break
+				new_toc.append(title)
+		else :
+			new_toc = []
+			for i,title in enumerate(toc_origin):
+				if title[2] > self.end: break
+				if title[0] == 1:
+					current_lv1 = i
+				if title[2] in range(self.start,self.end+1):
+					new_toc.append(title)
+					new_toc[-1][2] -= self.start
+			temp_toc = copy.deepcopy(toc_origin[current_lv1])
+			temp_toc[2] = 1
+			new_toc = [temp_toc] + new_toc
+		return new_toc

@@ -29,8 +29,6 @@ class wqxtDownloader():
 		self.bid 	= bid;
 		self.jwt_key = self.getJwtKey();
 		self.login = self.isLogin();
-		if not self.login:
-			return None;
 		bookInfo = self.initread();
 		self.name = bookInfo['name'];
 		self.page = int(bookInfo['pages']);
@@ -60,6 +58,8 @@ class wqxtDownloader():
 		data = request.read().decode("UTF-8");
 		# {"data":[],"errcode":8003,"errmsg":"很抱歉，您访问的图书不存在"} #图书不存在
 		bookInfo = json.loads( data );
+		if bookInfo["errcode"] == 8003:
+			raise BIDError(bookInfo["errmsg"])
 		pages = bookInfo['data'];
 		return pages;
 		# data: {
@@ -131,10 +131,7 @@ class wqxtDownloader():
 		jwt_enc = jwt.encode( jwt_data, jwt_key, algorithm='HS256');
 		return jwt_enc.decode(encoding='utf-8');
 
-	def start( self, *args ):
-		if not self.login:
-			logging.error( "登录错误，程序异常退出" );
-			return False;
+	def start( self, args ):
 		lNumber = len(args);
 		if lNumber == 0:
 			start = 1;
@@ -145,8 +142,10 @@ class wqxtDownloader():
 		else:
 			start = args[0];
 			end = args[1];
+		start = int(start)
+		end = int(end)
 		# 计算总页码
-		countNum = int(end) - int(start) + 1;
+		countNum = end - start + 1;
 		# 记录当前次数
 		downloadTimes = 1;
 		# 本次操作的页码列表
@@ -195,7 +194,7 @@ class wqxtDownloader():
 		name 	 = "_".join([ self.name, str(start), str(end) ]);
 		catatree = self.catatree;
 		# 如果不是下载完整书籍，需要对catatree进行处理。 @todo
-		pdf 	 = wqxtPDF(  bid, name, catatree );
+		pdf 	 = wqxtPDF(  bid, name, lNumber, start, end, catatree);
 		pdf.addPages( pageLists );
 		pdf.generatePDF();
 
@@ -237,7 +236,7 @@ class wqxtDownloader():
 
 	def getImgPath( self, page ):
 		fileExt = self.fileExt;
-		folder 	= self.folder;
+		folder  = self.folder;
 		path = "{folder}/{page}{fileExt}".format( folder=folder, page=str(page), fileExt=fileExt );
 		return path;
 
@@ -255,11 +254,32 @@ class wqxtDownloader():
 		userInfo = json.loads( data );
 		if userInfo['errcode'] == 0:
 			return True;
-		return False;
+		else:
+			raise NoLoginError(userInfo['errmsg'])
+
+class BIDError(Exception):
+	def __init__(self, errmsg):
+		logging.critical("获取图书内容失败，图书编号错误！");
+		self.errmsg = errmsg
+
+	def __str__(self):
+		return self.errmsg
+
+class NoLoginError(Exception):
+	def __init__(self, errmsg):
+		logging.critical("远程服务器返回尚未登录，检查是否成功登录或cookies是否设置正确");
+		self.errmsg = errmsg
+	
+	def __str__(self):
+		return self.errmsg
 
 class InvalidPictureError(Exception):
-	pass;
+	def __str__(self):
+		return "获取到了无效的图片"
 
 class TooManyRetry(Exception):
 	def __init__(self):
 		logging.critical("重试次数过多，程序终止，请尝试重新执行main.py");
+
+	def __str__(self):
+		return "重试次数超出设定次数"
