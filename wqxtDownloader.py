@@ -56,8 +56,12 @@ class wqxtDownloader():
 		curl = get_value("urllib");
 		request = curl.request.urlopen(url);
 		data = request.read().decode("UTF-8");
-		# {"data":[],"errcode":8003,"errmsg":"很抱歉，您访问的图书不存在"} #图书不存在
+		# {"data":[],"errcode":8003,"errmsg":"很抱歉，您访问的图书不存在"} #图书不存在	
 		bookInfo = json.loads( data );
+		if bookInfo["errcode"] == 3001:
+			raise NoLoginError
+		elif bookInfo["errcode"] == 8003:
+			raise BIDError
 		pages = bookInfo['data'];
 		return pages;
 		# data: {
@@ -178,7 +182,7 @@ class wqxtDownloader():
 				except error.HTTPError:
 					Errortimes += 1;
 					httpSleepTime =  self.errorConfig['httpSleep'];
-					logging.error("{} 发生了严重错误，暂停s秒 第{}页({}/{}) 正在重试第{}次".format( str(bid), str(sleepTime), page, str(downloadTimes), str(countNum), str(Errortimes)));
+					logging.error("{} 发生了严重错误，暂停s秒 第{}页({}/{}) 正在重试第{}次".format( str(bid), str(httpSleepTime), page, str(downloadTimes), str(countNum), str(Errortimes)));
 					self.kData = self.getK(); 		# 重新获取k
 					url = self.getPageUrl( page );	# 重新生成url
 					time.sleep( httpSleepTime )
@@ -238,6 +242,14 @@ class wqxtDownloader():
 			invalidpic = f.read()
 			f.close()
 			return invalidpic;
+
+class BIDError(Exception):
+	def __init__(self):
+		logging.critical("获取图书内容失败，图书编号错误！");
+
+class NoLoginError(Exception):
+	def __init__(self):
+		logging.critical("获取图书内容失败，未登录或cookies配置有误！");
 
 class InvalidPictureError(Exception):
 	pass;
