@@ -194,8 +194,7 @@ class wqxtDownloader():
 		name 	 = "_".join([ self.name, str(start), str(end) ]);
 		catatree = self.catatree;
 		# 如果不是下载完整书籍，需要对catatree进行处理。 @todo
-		pdf 	 = wqxtPDF(  bid, name, lNumber, start, end, catatree);
-		pdf.addPages( pageLists );
+		pdf 	 = wqxtPDF(  bid, name, lNumber, start, end, catatree, pageLists);
 		pdf.generatePDF();
 
 	def getFolder( self ):
