@@ -9,9 +9,11 @@ from wqxtDownloader import *;
 # 初始化全局变量
 globalvar_init();
 # 初始化urllib
-setCookiesFile(os.getcwd()+"\\cookies.txt");
+cookiesFile = os.getcwd()+"\\cookies.txt";
+if not os.path.exists(cookiesFile):
+	exit("cookies.txt文件不存在，请替换cookies_default.txt为cookies.txt。并修改相关参数");
+setCookiesFile( cookiesFile );
 initUrllib();
-# 初始化logging
 
 def parseMultBid( bids ):
 	while len(bids):
@@ -25,6 +27,7 @@ def parseMultBid( bids ):
 
 
 if __name__ == '__main__':
+	# 初始化logging
 	loggingLevel("INFO");
 	try:
 		opts, args = getopt.getopt(sys.argv[1:],"hb:p:",["help","books=","pages="])
