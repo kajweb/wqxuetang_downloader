@@ -30,9 +30,10 @@ if __name__ == '__main__':
 		opts, args = getopt.getopt(sys.argv[1:],"hb:p:",["help","books=","pages="])
 	except getopt.GetoptError:
 		print("main.py -b <BooksID_1>,<BooksID_2> ... [-p <start_page>,<end_page>][-p <end_page>], 或使用-h, --help来获取帮助")
-	if opts[0][0] == '-h':
+	if opts[0][0] in ['-h','--help']:
 		print("用法：python main.py -b <BooksID_1>,<BooksID_2> ... [-p <start_page>,<end_page>][-p <end_page>]\n")
 		print("参数：\n")
+		print("    -h, --help 查看此帮助\n" )
 		print("    -b, --books 后接你要下载的图书BID，支持多个图书，用英文逗号\",\"隔开\n" )
 		print("    -p, --pages (可选)后接要下载的页码，从开始到结束<start_page>,<end_page>，中间用英文逗号隔开若只输入一个页码则被认为是结束页码，不输入则下载整本书，若下载多本图书该参数无效\n")
 		sys.exit()
