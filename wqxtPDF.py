@@ -7,6 +7,7 @@ import os
 import img2pdf
 import time
 import fitz # pip3 install pymupdf
+import re
 
 class wqxtPDF():
 	fileExt = ".pdf"
@@ -41,6 +42,7 @@ class wqxtPDF():
 			PDFTempFolder	= self.PDFTempFolder;
 			bid			= self.bid;
 			name 		= self.name;
+			name = re.sub('[/\\:*"<>\|]',"_",name)	
 			fileExt 	= self.fileExt;
 			fileName = "{}_{}_{}{}".format( bid, name, curTime, fileExt );
 			tempName = "{}_{}_{}_nomarks{}".format( bid, name, curTime, fileExt );
