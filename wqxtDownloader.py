@@ -7,7 +7,10 @@ import json
 import logging
 import jwt
 import socket
+
 from urllib import error
+from io import BytesIO
+from PIL import Image
 
 class wqxtDownloader():
 	fileExt = ".jpg";
@@ -226,12 +229,23 @@ class wqxtDownloader():
 				raise InvalidPictureError
 			if len( data )<=5:
 				raise InvalidPictureError
-			f = open(path,"wb")
-			f.write(data)  
-			f.close()
+			if data[:4] == b'\xff\xd8\xff\xe0': # 是不是jpg文件	
+				f = open(path,"wb")
+				f.write(data)  
+				f.close()
+			else:
+				self.img_converter(data, path)
 			return True;
 		else:
 			return False;
+
+	def img_converter(self, in_img, path):
+		img = BytesIO(in_img)
+		origin_img = Image.open(img)
+		jpg_img = origin_img.convert('RGB')
+		jpg_img.save(path)
+		img.close()
+		del img
 
 	def getImgPath( self, page ):
 		fileExt = self.fileExt;
