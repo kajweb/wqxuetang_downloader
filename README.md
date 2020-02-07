@@ -25,9 +25,9 @@
 > 如果您喜欢该程序，请支持正版软件，购买注册，得到更好的正版服务。
 > 如有侵权请邮件与我们联系处理。
 
-[免责声明](https://github.com/kajweb/wqxuetang_downloader/免责声明)
+[免责声明](https://github.com/kajweb/wqxuetang_downloader/wiki/免责声明)
 
-[爬取声明](https://github.com/kajweb/wqxuetang_downloader/爬取声明)
+[爬取声明](https://github.com/kajweb/wqxuetang_downloader/wiki/爬取声明)
 
 ## ⌛️ 安装与使用
 
